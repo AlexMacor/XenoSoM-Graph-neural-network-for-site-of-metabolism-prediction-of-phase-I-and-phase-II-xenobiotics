@@ -9,15 +9,17 @@ Requipments
 * torch                   2.7.1+cu118
 * torch-geometric         2.6.1
 
-1. Create and activate the virtual environment
+## 1. Create and activate the virtual environment
 
 Run the following command in your project directory:
 ```bash
 python3 -m venv .GNN_SoM_env
 ```
 
-2. Activate the virtual environment
-On Linux: source .GNN_SoM_env/bin/activate On Windows: .GNN_SoM_env\Scripts\activate
+## 2. Activate the virtual environment
+
+On Linux: source .GNN_SoM_env/bin/activate
+On Windows: .GNN_SoM_env\Scripts\activate
 
 ## Usage
 Read the notes.txt file carefully for a detailed explanation from dataset preparation to inference.
