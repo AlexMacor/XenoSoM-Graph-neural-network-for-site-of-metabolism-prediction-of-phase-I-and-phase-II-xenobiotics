@@ -1,4 +1,4 @@
-GraphSoM_EX-a-site-of-metabolism-predictor-for-phase-I-and-phase-II-metabolic-reaction
+# GraphSoM_EX-a-site-of-metabolism-predictor-for-phase-I-and-phase-II-metabolic-reaction
 
 Requipments
   Numpy 2.3.1
@@ -9,4 +9,8 @@ Requipments
   torch                   2.7.1+cu118
   torch-geometric         2.6.1
 
-GNN_SoM
+## GNN_SoM models
+The prediction on new molecules can be in batch model using:
+```cmd
+Run_inference_gin_rdkit.cmd
+```
