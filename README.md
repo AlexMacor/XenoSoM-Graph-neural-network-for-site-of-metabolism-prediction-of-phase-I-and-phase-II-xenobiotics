@@ -1,6 +1,7 @@
 # GraphSoM_EX-a-site-of-metabolism-predictor-for-phase-I-and-phase-II-metabolic-reaction
 
 Requipments
+* Python 3.13.0
 * Numpy 2.3.1
 * pandas 2.3.0
 * Matplotlib 3.10.3
