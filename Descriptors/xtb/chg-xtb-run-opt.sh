@@ -1,8 +1,8 @@
 #!/bin/bash
 
-in_path='/mnt/c/Users/Alessio Macorano/Desktop/Database-test-reazione-equilibrioum/opt/xtb/1' 
-xtb_path='/mnt/c/Users/Alessio Macorano/Desktop/Database-metabolismo-glucuronidazione/xtb'
-temp_path='/mnt/c/Users/Alessio Macorano/Desktop/Database-test-reazione-equilibrioum/opt/xtb/2' 
+in_path='/mnt/c/Users//opt/xtb/1' 
+xtb_path='/mnt/c/Users//xtb'
+temp_path='/mnt/c/Users//opt/xtb/2' 
 													 
 
 mkdir -p "$temp_path"
