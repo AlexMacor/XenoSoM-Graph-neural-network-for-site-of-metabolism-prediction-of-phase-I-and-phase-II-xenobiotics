@@ -1,10 +1,5 @@
 @echo off
-echo Iniziato il training per le reti 2D
-
-call "path_to_env\Scripts\activate.bat"
-
-REM --root_path e' il percorso che contiene le cartelle con all'interno i file sdf 
-REM --descr_path e' il percorso che contiene le cartelle con all'interno i file csv di output del calcolo cdk 
+echo Training for GNNs with cdk
 
 python Dealylation.py --root_path "\Dealkylation" --descr_path "\percorso\descrittori\cdk" --use_cdk > log_Dealylation_script_cdk.txt 2>&1
 python Equilibrium.py --root_path "\Equilibrium" --descr_path "\percorso\descrittori\cdk" --use_cdk > log_Equilibrium_script_cdk.txt 2>&1
@@ -14,3 +9,4 @@ python Hydrolysis.py --root_path "\Hydrolysis" --descr_path "\percorso\descritto
 python Oxidation.py --root_path "\Oxidation" --descr_path "\percorso\descrittori\cdk" --use_cdk > log_Oxidation_script_cdk.txt 2>&1
 python Reduction.py --root_path "\Reduction" --descr_path "\percorso\descrittori\cdk" --use_cdk > log_Reduction_script_cdk.txt 2>&1
 python Sulfonation.py --root_path "\Sulfonation" --descr_path "\percorso\descrittori\cdk" --use_cdk > log_Sulfonation_script_cdk.txt 2>&1
+
