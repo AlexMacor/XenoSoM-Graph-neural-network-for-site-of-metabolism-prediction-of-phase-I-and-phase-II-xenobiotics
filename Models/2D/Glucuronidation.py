@@ -50,7 +50,7 @@ args = parser.parse_args()
 root_path, path_csv_descr_subclass, use_cdk = args.root_path, args.descr_path, args.use_cdk
 
 
-ELEM_LIST = [6,7,8,9,14,15,16,17,35,53]  # B, C, N, O, F, Al, Si, P, S, Cl,Fe,Ge, As,Se, Br, I, Pt, Au #
+ELEM_LIST = [6,7,8,9,14,15,16,17,35,53]  
 CHIRALITY = ['CHI_UNSPECIFIED','CHI_TETRAHEDRAL_CW','CHI_TETRAHEDRAL_CCW']
 DEGREE = [1,2,3,4]
 HYBRIDIZATION = ['SP','SP2','SP3']
@@ -87,7 +87,7 @@ def generate_bond_features(bond: Bond) -> List[float]:
     ]
 
 # Convert the Mol object into pytorch geometric data 
-# Add the position 3D coordinate and bond lenght) da capire 
+
 
 def from_rdmol_one_hot(mol: Chem.Mol) -> Data:
     """Converts an RDKit molecule (Mol) to a PyTorch Geometric Data instance
@@ -236,7 +236,7 @@ for subclass in subclass_folders:
                 edge_attr=g.edge_attr,
                 cdk_desc=g.cdk_desc
             )
-            data.name = nome_molecola  # Aggiungi il nome al grafo
+            data.name = nome_molecola  
             data_list.append(data)
         
     else: 
@@ -247,10 +247,10 @@ for subclass in subclass_folders:
             data_list.append(data)
 
             
-    assert len(data_list) == len(tensori_y), f"❌ Mismatch in {subclass}: {len(data_list)} grafi, {len(tensori_y)} etichette"
+    assert len(data_list) == len(tensori_y), f" Mismatch in {subclass}: {len(data_list)} grafi, {len(tensori_y)} etichette"
     
     for i, j in zip(data_list, tensori_y):
-        assert i.x.shape[0] == len(j), f"❌ Mismatch in {i.name}: {i.x.shape[0]} nodi, {len(j)} etichette"
+        assert i.x.shape[0] == len(j), f" Mismatch in {i.name}: {i.x.shape[0]} nodi, {len(j)} etichette"
         i.y = j
     
     
@@ -274,16 +274,16 @@ for subclass in subclass_folders:
     # Split
     df_e = pd.DataFrame({'nomi molecole':mol_names, 'oggetto mol':molecules_h, 'morgan fingerprint': Mfpts,})
     
-    # prima separo le 702 molecole del test e val 
+     
     val_test_picker = MaxMinPicker()
     nMfpts = len(Mfpts) # qua lavoro su tutte le morgan fingerprint 
-    val_test_pickIndices = val_test_picker.LazyBitVectorPick(Mfpts,nMfpts,value_1,seed=23) # in this case will take 702 different molecules 
-    list(val_test_pickIndices) # questi sono gli indici dei diversity picker 
+    val_test_pickIndices = val_test_picker.LazyBitVectorPick(Mfpts,nMfpts,value_1,seed=23)  
+    list(val_test_pickIndices)  
     
     # for test val split 
-    molname_val_test_picks = [mol_names[x] for x in val_test_pickIndices] # cosi ottengo i nomi 
-    molecules_h_val_test_picks = [molecules_h[x] for x in val_test_pickIndices] # cosi ottengo le molecole
-    mol_val_test_picks = [Mfpts[x] for x in val_test_pickIndices] # cosi ottengo le morgan
+    molname_val_test_picks = [mol_names[x] for x in val_test_pickIndices] 
+    molecules_h_val_test_picks = [molecules_h[x] for x in val_test_pickIndices] 
+    mol_val_test_picks = [Mfpts[x] for x in val_test_pickIndices] 
     df_val_test = pd.DataFrame({'nomi molecole':molname_val_test_picks, 'oggetto mol':molecules_h_val_test_picks, 'morgan fingerprint': mol_val_test_picks})
     
     # validation splitting 
@@ -292,15 +292,15 @@ for subclass in subclass_folders:
     val_pickIndices = val_picker.LazyBitVectorPick(mol_val_test_picks,nmol_val_test_picks,value_2,seed=23) # ottengo indici delle molecole 351 dalle 702 
     list(val_pickIndices) 
     
-    molname_val_picks = [molname_val_test_picks[x] for x in val_pickIndices] # cosi ottengo i nomi 
-    mol_val_picks = [mol_val_test_picks[x] for x in val_pickIndices] # cosi ottengo le morgan
-    molecules_h_val_picks = [molecules_h_val_test_picks[x] for x in val_pickIndices] # cosi ottengo le molecole
+    molname_val_picks = [molname_val_test_picks[x] for x in val_pickIndices] 
+    mol_val_picks = [mol_val_test_picks[x] for x in val_pickIndices] 
+    molecules_h_val_picks = [molecules_h_val_test_picks[x] for x in val_pickIndices] 
     
     df_validation = pd.DataFrame({'nomi molecole':molname_val_picks, 'oggetto mol':molecules_h_val_picks, 'morgan fingerprint': mol_val_picks})
     
     # test splitting
-    # prima e come se definissi gli indici delle molecole da prendere 
-    test_indices = [i for i in range(len(mol_val_test_picks)) if i not in val_pickIndices] # anche qui la lunghezza e di 702 , ma l'obiettivo e prendere le altre 351 
+    
+    test_indices = [i for i in range(len(mol_val_test_picks)) if i not in val_pickIndices] 
     test_picker = MaxMinPicker()
     nmol_test_picks = len(test_indices)
     test_pickIndices = test_picker.LazyBitVectorPick([mol_val_test_picks[i] for i in test_indices], nmol_test_picks,value_3,seed=23)
@@ -420,7 +420,7 @@ for subclass in subclass_folders:
         os.makedirs(save_dir, exist_ok=True)
 
     for model_name, model in models_to_test.items():
-        print(f"\n Training e testing per il modello: {model_name}")
+        print(f"\n Training and testing for the model: {model_name}")
 
         optimizer = Adam(model.parameters(), lr=0.001, weight_decay=0.01)
 
@@ -461,4 +461,4 @@ for subclass in subclass_folders:
 
         pd.DataFrame.from_dict([final_metrics]).to_csv(metrics_file, index=False)
         print(f"\n[*] {model_name} salvato in: {model_path}")
-        print(f"[*] Metriche salvate in: {metrics_file}")
+        print(f"[*] Metrics saved in: {metrics_file}")

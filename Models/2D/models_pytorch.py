@@ -16,17 +16,13 @@ import torch
 from torch.optim import Adam
 from sklearn.metrics import matthews_corrcoef
 
-### BATCH NORMALIZATION SOLO SE USO CDK E XTB DESCRITTORI NUMERICI
-
-## Qui la batch normalization viene rimossa 
-
 n_0, n_1 = None, None
 
 def set_class_frequencies(n0, n1):
     global n_0, n_1
     n_0 = n0
     n_1 = n1
-    print(f" Frequenze impostate: n_0 = {n_0} | n_1 = {n_1}")
+    print(f" Frequency set to: n_0 = {n_0} | n_1 = {n_1}")
 
 class GINModel_cdk(nn.Module):
     def __init__(self, in_channels, hidden_channels, num_layers, dropout, cdk_dim, out_channels=1):
@@ -238,8 +234,7 @@ class GCNModel(nn.Module):
         
         x = self.lin(x)
         return torch.sigmoid(x).squeeze()
-
-# definisco il modello e importo   
+   
 def weighted_binary_crossentropy(y_true, y_pred):
     weight_0 = (n_0 + n_1) / (2 * n_0)
     weight_1 = (n_0 + n_1) / (2 * n_1)
