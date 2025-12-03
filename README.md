@@ -39,7 +39,7 @@ python utils_folder.py --csv \path_to_csv_file\ --out \path_to_generate_folder\
 
 main.py: data preprocessing and prepares the dependent variable y 
 ```bash
-python main.py --csv path_to_csv_file --base main_path_to_build_the_dataset --sdf "path_containing_all_the_sdf_files" --out_som "path_output_for_y_som"
+python main.py --csv path_to_csv_file --base main_path_to_build_the_dataset --sdf path_containing_all_the_sdf_files --out_som "path_output_for_y_som"
 ```
 
 utils_sdf.py: gets a set of the sdf molecules for the next step
@@ -64,20 +64,20 @@ Here you can calculate two sets of atomic descriptors based on the chemistry dev
   
     ```bash
     python sdf_process_xtb.py \
-    --multi_sdfs "/mnt/c/Users//opt/sdf" \
-    --input_cdk_xtb "/mnt/c/Users//opt/AC-output" \
-    --charges_csv "/mnt/c/Users//opt/charges.csv" \
-    --in_path "/mnt/c/Users//opt/xtb/1" \
-    --temp_path "/mnt/c/Users//opt/xtb/2" \
-    --fin_path "/mnt/c/Users//opt/xtb/3" \
-    --sh_file_path "/mnt/c/Users//opt/xtb/chg-xtb-run-opt.sh" \
-    --SP_bash_script "/mnt/c/Users//opt/xtb/chg-xtb-run-SP.sh"
+    --multi_sdfs /mnt/c/Users//opt/sdf \
+    --input_cdk_xtb /mnt/c/Users//opt/AC-output \
+    --charges_csv /mnt/c/Users//opt/charges.csv \
+    --in_path /mnt/c/Users//opt/xtb/1 \
+    --temp_path /mnt/c/Users//opt/xtb/2 \
+    --fin_path /mnt/c/Users//opt/xtb/3 \
+    --sh_file_path /mnt/c/Users//opt/xtb/chg-xtb-run-opt.sh \
+    --SP_bash_script /mnt/c/Users//opt/xtb/chg-xtb-run-SP.sh
      ```
 
     get_xtb_descriptors.py: extract the xtb descriptors
   
     ```bash
-    python script_xtb_desc.py --path_to_xtb_desc "/mnt/c/Users//xtb_desc"
+    python script_xtb_desc.py --path_to_xtb_desc /mnt/c/Users//xtb_desc
     ```
 
    cdk
@@ -92,7 +92,7 @@ Here you can calculate two sets of atomic descriptors based on the chemistry dev
     sdf_process-cdk: takes the list of SDF files previously obtained and calculates the descriptors.
     
     ```bash
-     python sdf_process-cdk.py --multi_sdfs "C:\mol\split_sdf" --cdk_jar_file "C:\cdk\cdk-2.2.jar" --  multi_sdfs_out_cdk "C:\output\cdk_results" --csv_cdk_out "C:\output\nan_report.csv"
+     python sdf_process-cdk.py --multi_sdfs C:\mol\split_sdf --cdk_jar_file C:\cdk\cdk-2.2.jar --  multi_sdfs_out_cdk C:\output\cdk_results --csv_cdk_out C:\output\nan_report.csv
 
     ```       
 
@@ -105,7 +105,7 @@ Run_training.cmd
 which performs GNN training in batch mode for each of the reaction modelled, for example, the following command was used for the glucuronidation reaction: 
 
 ```bash
-python Glucuronidation.py --root_path "Glucuronidation" > log_Glucuronidation_script.txt 2>&1
+python Glucuronidation.py --root_path Glucuronidation > log_Glucuronidation_script.txt 2>&1
 ```
 
 ## 5 Inference 
