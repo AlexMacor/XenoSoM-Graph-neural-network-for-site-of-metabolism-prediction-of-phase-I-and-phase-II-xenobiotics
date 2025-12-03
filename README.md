@@ -31,12 +31,20 @@ Dataset_prep.cmd
 ```
 which contain the three following .py scripts
 
-
-
-
-
-This .cmd program will run three Python scripts in batch mode. You should open it with any text editor and modify the paths as required. Details about the three scripts are provided in the notes.txt file.
-
+utils_folder.py: create folders  
+```bash
+python utils_folder.py --csv "\path_to_csv_file\" --out "\path_to_generate_folder\"
+```
+main.py: data preprocessing and prepare the dependent variable y 
+```bash
+python main.py --csv "path_to_csv_file" --base "main_path_to_build_the_dataset" --sdf "path_containing_all_the_sdf_files" --out_som "path_output_for_y_som"
+```
+utils_sdf.py: get a set of the sdf molecules for the next step
+```bash
+python utils_sdf.py --base_path "\main_path_to_build_the_dataset\" --sdf_m "\path_to_sdf_file_multisdfs\" --multi_sdfs "\output_folder_for_multisdfs\"
+	
+```
+    
 ## 3 Descriptors calculation
 Here you can calculate two set of atomic descriptors based on the chemistry development toolkit (cdk) and Semiempirical Extended Tight-Binding Program Package (xtb). 
 
@@ -66,25 +74,48 @@ Here you can calculate two set of atomic descriptors based on the chemistry deve
     get_xtb_descriptors.py: extract the xtb descriptors
   
     ```bash
-    python3 script_xtb_desc.py --path_to_xtb_desc "/mnt/c/Users//xtb_desc"
+    python script_xtb_desc.py --path_to_xtb_desc "/mnt/c/Users//xtb_desc"
     ```
 
-
-
-
-
    cdk
-  - 3D descriptors: before calculating these descriptors, for each molecule, a geometry optimization is              performed at the nearest minimum of the potential energy surface (PES). Next a single point using was            carried out.  
+  - calculation can be carried out for both 2D as well as 3D structure
+    
+    Run the following command to calculate the cdk descriptors:
+    ```bash
+    Cdk_calculation.cmd
+    ```   
+    which contain the following .py script:
+    sdf_process-cdk: from the list of sdf files previously obtained will calculate the descriptors.
+    
+    ```bash
+     python sdf_process-cdk.py --multi_sdfs "C:\mol\split_sdf" --cdk_jar_file "C:\cdk\cdk-2.2.jar" --  multi_sdfs_out_cdk "C:\output\cdk_results" --csv_cdk_out "C:\output\nan_report.csv"
 
-Run the following command in your project directory:
+    ```       
+
+## 4 GNNs training 
+To perform the GNN training run the following script:
+
 ```bash
-Dataset_prep.cmd
+Run_training.cmd
 ```
-This .cmd program will run three Python scripts in batch mode. You should open it with any text editor and modify the paths as required. Details about the three scripts are provided in the notes.txt file.
+which perform in a batch style the GNN training for each of the reaction modelled, for example, the following command was used for the glucuronidation reaction: 
 
+```bash
+python Glucuronidation.py --root_path "Glucuronidation" > log_Glucuronidation_script.txt 2>&1
+```
 
+## 5 Inference 
+To perform inference with the previous trained model run in batch mode the following script:
 
+```bash
+Run_inference_gin_rdkit.cmd
+```
+which perform in a batch style the inference for all the reactions using the GIN architecture with the rdkit atomic descriptors. For example, the following command was used for the glucuronidation reaction: 
+
+```bash
+python Glucuronidation.py --root_path "main folder" --file_sdf_inf_p "sdf folder inference"
+```
 
 ## Usage
-Read the notes.txt file carefully for a detailed explanation from dataset preparation to inference.
+Please read the notes.txt file for more information about this work. 
 
