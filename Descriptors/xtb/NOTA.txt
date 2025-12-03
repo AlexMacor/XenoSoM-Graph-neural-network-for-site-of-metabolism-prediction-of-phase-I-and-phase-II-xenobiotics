@@ -1,0 +1,1 @@
+Lanciare prima il codice code_AM poi dopo sdf-process-xtb e poi calcolo xtb 
