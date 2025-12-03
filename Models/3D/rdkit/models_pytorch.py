@@ -42,10 +42,7 @@ from modules.interaction_block import InteractionBlock
 from modules.output_pp_block import OutputPPBlock
 from modules.output_block import OutputBlock
 from modules.triplets import triplets
-
-### BATCH NORMALIZATION SOLO SE USO CDK E XTB DESCRITTORI NUMERICI
-
-## Qui la batch normalization viene rimossa 
+ 
 device = torch.device('cpu')
 
 n_0, n_1 = None, None
@@ -424,8 +421,7 @@ class GATC(nn.Module):
         x = self.lin(x)
         return torch.sigmoid(x).squeeze()  
 '''
-
-# definisco il modello e importo   
+  
 def weighted_binary_crossentropy(y_true, y_pred):
     weight_0 = (n_0 + n_1) / (2 * n_0)
     weight_1 = (n_0 + n_1) / (2 * n_1)
