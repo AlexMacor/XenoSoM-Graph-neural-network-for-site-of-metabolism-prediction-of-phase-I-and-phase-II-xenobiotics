@@ -19,8 +19,9 @@ python3 -m venv .GNN_SoM_env
 
 ## 2. Activate the virtual environment
 
-On Linux: source .GNN_SoM_env/bin/activate
+On Linux: source .GNN_SoM_env/bin/activate  
 On Windows: .GNN_SoM_env\Scripts\activate
+
 
 ## 3 Dataset preparation
 Dataset preparation involves several steps. Starting from the CSV file, the entire data structure is created in order to perform both descriptor calculations and GNN training/inference.
