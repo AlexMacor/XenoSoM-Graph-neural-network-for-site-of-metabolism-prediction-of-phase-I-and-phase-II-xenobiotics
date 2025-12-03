@@ -10,19 +10,19 @@ args = parser.parse_args()
 
 # xtb software only for linux 
 
-bash_script_path = r"/mnt/c/Users/Alessio Macorano/Desktop/Database-test-reazione-equilibrioum/opt/xtb/chg-xtb-run-opt.sh" # file script with the declare of the charge 
+bash_script_path = r"/mnt/c//opt/xtb/chg-xtb-run-opt.sh" # file script with the declare of the charge 
 n_folders = args.n_folders # set the number of folder identical to the number of input files. 
 
-in_path = r"/mnt/c/Users/Alessio Macorano/Desktop/Database-test-reazione-equilibrioum/opt/xtb/1" # folder number 1 
-temp_path = r"/mnt/c/Users/Alessio Macorano/Desktop/Database-test-reazione-equilibrioum/opt/xtb/2"  # folder number 2
-fin_path = r"/mnt/c/Users/Alessio Macorano/Desktop/Database-test-reazione-equilibrioum/opt/xtb/3"  # folder number 3
+in_path = r"/mnt/c/Users//opt/xtb/1" # folder number 1 
+temp_path = r"/mnt/c/Users//opt/xtb/2"  # folder number 2
+fin_path = r"/mnt/c/Users//opt/xtb/3"  # folder number 3
 
 
 subprocess.run(["bash", bash_script_path], check=True) 
 
 while True:
     n_cartelle = len([d for d in os.listdir(temp_path) if os.path.isdir(os.path.join(temp_path, d))])
-    print(f"Cartelle trovate: {n_cartelle}", end='\r')
+    print(f"folder found: {n_cartelle}", end='\r')
     if n_cartelle >= n_folders:
         break
     time.sleep(60)
@@ -63,29 +63,29 @@ while True:
                             try:
                                 shutil.move(full_path, destinazione_finale)
                             except Exception as e:
-                                print(f"Errore spostando {subfile}: {e}")
+                                print(f"Error moving {subfile}: {e}")
                         else:
                             try:
                                 os.remove(full_path)
                             except Exception as e:
-                                print(f"Errore rimuovendo {full_path}: {e}")
+                                print(f"Error removing {full_path}: {e}")
 
                     try:
                         if not os.listdir(nuova_cartella):
                             os.rmdir(nuova_cartella)
                     except Exception as e:
-                        print(f"Errore rimuovendo cartella {nuova_cartella}: {e}")
+                        print(f"Error removing folder {nuova_cartella}: {e}")
 
-                    break  # passa alla prossima cartella
+                    break  # next folder
                     
     # Re run the sdf files with negative IF ===
     if os.listdir(in_path):
-        print("Rilancio script Bash per elaborare i nuovi .sdf...")
+        print("Rerun loop for molecules with negative IF.")
         try:
             subprocess.run(["bash", bash_script_path], check=True)
-            print("Script Bash completato.")
+            print("Completed.")
         except subprocess.CalledProcessError as e:
-            print(f"Errore eseguendo il Bash script: {e}")
+            print(f"Error during the processing of the bash script: {e}")
         time.sleep(5) 
         
     
@@ -111,15 +111,16 @@ while True:
             cartelle_ok += 1
     
     cartelle_non_ok = n_folders - cartelle_ok
-    print(f"Cartelle con file sdf senza frequenze immaginarie: {cartelle_ok}/{n_folders}")
+    print(f"Folders with sdf files without imaginary frequencies: {cartelle_ok}/{n_folders}")
     
     if cartelle_ok >= n_folders:
         print("ok")
         cartelle_non_ok = n_folders - cartelle_ok
-        print(f"Alcuni file sdf devono essere riottimizzati: {cartelle_non_ok}")
-        break  # FINE
+        print(f"Some sdf files need to be re-optimized: {cartelle_non_ok}")
+        break  # finish
     else:
         cartelle_non_ok = n_folders - cartelle_ok
-        print(f"Alcuni file sdf devono essere riottimizzati: ({cartelle_non_ok}). Ripeto...")
+        print(f"Some sdf files need to be re-optimized: ({cartelle_non_ok}). Ripeto...")
         time.sleep(60)
+
     
