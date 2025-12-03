@@ -44,9 +44,9 @@ from models_pytorch import set_class_frequencies
 from torch_geometric.utils import to_networkx, from_networkx
 import argparse
 
-parser = argparse.ArgumentParser(description="Training con descrittori xtb")
-parser.add_argument('--root_path', type=str, required=True,help="Percorso della cartella principale contenente i dati")
-parser.add_argument('--xtb_path', type=str, required=True,help="Percorso dei descrittori xtb")
+parser = argparse.ArgumentParser(description="Training with xtb descriptors")
+parser.add_argument('--root_path', type=str, required=True,help="main path")
+parser.add_argument('--xtb_path', type=str, required=True,help="Path of descriptors xtb")
 
 args = parser.parse_args()
 root_path = args.root_path
@@ -89,17 +89,17 @@ def get_xtb_descriptors(path_file_sdf, path_file_csv_descr):
                             if len(df_merged) == len(df_alpha):  
                                 df_merged['atoms'] = df_alpha['atoms']
                             else:
-                                print(f"Attenzione: {folder_name} ha un numero di righe diverso tra _merged.csv ({len(df_merged)}) e _alpha.csv ({len(df_alpha)})")
+                                print(f"Attention: {folder_name} has a different number of rows between _merged.csv ({len(df_merged)}) and _alpha.csv ({len(df_alpha)})")
                         #df_merged = df_merged[df_merged['atoms'] != 'H'].reset_index(drop=True) # questa se voglio eliminare gli idrogeni usando xtb. 
                         df_merged = df_merged.drop(columns=['atoms'])
                     
-                        features_xtb = torch.from_numpy(df_merged.values.astype(np.float32))  # Rimuoviamo la colonna 'atoms' prima della conversione
+                        features_xtb = torch.from_numpy(df_merged.values.astype(np.float32))  
                         xtb_desc.append(features_xtb)
 
-    return xtb_desc # qui otteniamo la lista di descrittrori xtb
+    return xtb_desc 
     
 def from_rdmol_dimenet(mol: Chem.Mol, node_features: Optional[torch.Tensor] = None) -> Data:
-    assert mol.GetNumConformers() > 0, "La molecola deve avere coordinate 3D."
+    assert mol.GetNumConformers() > 0, "The molecule must have 3D coordinates."
 
     z = torch.tensor([atom.GetAtomicNum() for atom in mol.GetAtoms()], dtype=torch.long)
     conf = mol.GetConformer()
@@ -115,7 +115,7 @@ def from_rdmol_dimenet(mol: Chem.Mol, node_features: Optional[torch.Tensor] = No
     return data
 
     
-seed = 23  # Usa sempre lo stesso valore per consistenza
+seed = 23  
 torch.manual_seed(seed)
 random.seed(seed)
 np.random.seed(seed)
@@ -135,7 +135,7 @@ for subclass in subclass_folders:
     n_file_sdf_in_folder = len([f for f in file_sdf if f.endswith('.sdf')])
     
     if n_file_sdf_in_folder <= 50:
-        print(f"  Skipping '{subclass}' (solo {n_file_sdf_in_folder} molecole)")
+        print(f"  Skipping '{subclass}' (only {n_file_sdf_in_folder} molecole)")
         continue
         
     ## calcolo dei valori per rdkit diversity picker 
@@ -211,33 +211,33 @@ for subclass in subclass_folders:
     # Split
     df_e = pd.DataFrame({'nomi molecole':mol_names, 'oggetto mol':molecules_h, 'morgan fingerprint': Mfpts,})
     
-    # prima separo le 702 molecole del test e val 
+     
     val_test_picker = MaxMinPicker()
-    nMfpts = len(Mfpts) # qua lavoro su tutte le morgan fingerprint 
-    val_test_pickIndices = val_test_picker.LazyBitVectorPick(Mfpts,nMfpts,value_1,seed=23) # in this case will take 702 different molecules 
-    list(val_test_pickIndices) # questi sono gli indici dei diversity picker 
+    nMfpts = len(Mfpts)  
+    val_test_pickIndices = val_test_picker.LazyBitVectorPick(Mfpts,nMfpts,value_1,seed=23)  
+    list(val_test_pickIndices)  
     
     # for test val split 
-    molname_val_test_picks = [mol_names[x] for x in val_test_pickIndices] # cosi ottengo i nomi 
-    molecules_h_val_test_picks = [molecules_h[x] for x in val_test_pickIndices] # cosi ottengo le molecole
-    mol_val_test_picks = [Mfpts[x] for x in val_test_pickIndices] # cosi ottengo le morgan
+    molname_val_test_picks = [mol_names[x] for x in val_test_pickIndices] 
+    molecules_h_val_test_picks = [molecules_h[x] for x in val_test_pickIndices] 
+    mol_val_test_picks = [Mfpts[x] for x in val_test_pickIndices] 
     df_val_test = pd.DataFrame({'nomi molecole':molname_val_test_picks, 'oggetto mol':molecules_h_val_test_picks, 'morgan fingerprint': mol_val_test_picks})
     
     # validation splitting 
     val_picker = MaxMinPicker()
-    nmol_val_test_picks = len(mol_val_test_picks) # la lunghezza finale qui e di 702 
-    val_pickIndices = val_picker.LazyBitVectorPick(mol_val_test_picks,nmol_val_test_picks,value_2,seed=23) # ottengo indici delle molecole 351 dalle 702 
+    nmol_val_test_picks = len(mol_val_test_picks)  
+    val_pickIndices = val_picker.LazyBitVectorPick(mol_val_test_picks,nmol_val_test_picks,value_2,seed=23)  
     list(val_pickIndices) 
     
-    molname_val_picks = [molname_val_test_picks[x] for x in val_pickIndices] # cosi ottengo i nomi 
-    mol_val_picks = [mol_val_test_picks[x] for x in val_pickIndices] # cosi ottengo le morgan
-    molecules_h_val_picks = [molecules_h_val_test_picks[x] for x in val_pickIndices] # cosi ottengo le molecole
+    molname_val_picks = [molname_val_test_picks[x] for x in val_pickIndices] 
+    mol_val_picks = [mol_val_test_picks[x] for x in val_pickIndices] 
+    molecules_h_val_picks = [molecules_h_val_test_picks[x] for x in val_pickIndices] 
     
     df_validation = pd.DataFrame({'nomi molecole':molname_val_picks, 'oggetto mol':molecules_h_val_picks, 'morgan fingerprint': mol_val_picks})
     
     # test splitting
-    # prima e come se definissi gli indici delle molecole da prendere 
-    test_indices = [i for i in range(len(mol_val_test_picks)) if i not in val_pickIndices] # anche qui la lunghezza e di 702 , ma l'obiettivo e prendere le altre 351 
+     
+    test_indices = [i for i in range(len(mol_val_test_picks)) if i not in val_pickIndices]  
     test_picker = MaxMinPicker()
     nmol_test_picks = len(test_indices)
     test_pickIndices = test_picker.LazyBitVectorPick([mol_val_test_picks[i] for i in test_indices], nmol_test_picks,value_3,seed=23)
@@ -344,7 +344,7 @@ for subclass in subclass_folders:
     os.makedirs(save_dir, exist_ok=True)
 
     for model_name, model in models_to_test.items():
-        print(f"\n Training e testing per il modello: {model_name}")
+        print(f"\n Training and testing for the model: {model_name}")
 
         optimizer = Adam(model.parameters(), lr=0.001, weight_decay=0.01)
 
@@ -385,4 +385,4 @@ for subclass in subclass_folders:
 
         pd.DataFrame.from_dict([final_metrics]).to_csv(metrics_file, index=False)
         print(f"\n[*] {model_name} salvato in: {model_path}")
-        print(f"[*] Metriche salvate in: {metrics_file}")
+        print(f"[*] Metrics saved  in: {metrics_file}")
