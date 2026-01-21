@@ -1,4 +1,4 @@
-# GraphSoM_EX: a site of metabolism predictor for phase I and phase II metabolic reaction
+# GraphSoMEx: a site of metabolism predictor for phase I and phase II metabolic reaction
 
 Requirements
 * Python 3.13.0
