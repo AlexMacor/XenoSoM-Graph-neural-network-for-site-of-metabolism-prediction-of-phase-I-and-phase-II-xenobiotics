@@ -1,4 +1,4 @@
-# GraphSoMEx: a site of metabolism predictor for phase I and phase II metabolic reaction
+# Development of Graph Neural Networks Models for Simultaneous Prediction of Metabolic Pathways and Reactive Sites
 
 Requirements
 * Python 3.13.0
