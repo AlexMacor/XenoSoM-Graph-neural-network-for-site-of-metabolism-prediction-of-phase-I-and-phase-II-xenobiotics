@@ -1,4 +1,4 @@
-# Development of Graph Neural Networks Models for Simultaneous Prediction of Metabolic Pathways and Reactive Sites
+# Leveraging Graph Neural Networks for Joint Prediction of Sites of Metabolism and Corresponding biotransformations
 
 Requirements
 * Python 3.13.0
