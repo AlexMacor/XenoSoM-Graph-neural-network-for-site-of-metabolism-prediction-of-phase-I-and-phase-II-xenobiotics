@@ -1,4 +1,4 @@
-# XenoSoM : Graph neural network for site of metabolism prediction of phase I and phase II xenobiotics
+# XenoSoM: Graph neural network for site of metabolism prediction of phase I and phase II xenobiotics
 
 Requirements
 * Python 3.13.0
