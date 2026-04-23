@@ -1,4 +1,4 @@
-# Leveraging Graph Neural Networks for Joint Prediction of Sites of Metabolism and Corresponding biotransformations
+# XenoSoM : Graph neural network for site of metabolism prediction of phase I and phase II xenobiotics
 
 Requirements
 * Python 3.13.0
