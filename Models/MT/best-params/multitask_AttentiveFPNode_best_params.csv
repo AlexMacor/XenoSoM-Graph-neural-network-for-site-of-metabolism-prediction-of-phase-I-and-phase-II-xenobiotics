@@ -1,0 +1,2 @@
+lr,weight_decay,hidden_dim,dropout,n_layers,batch_size,model_name
+0.0010065464185964124,4.794263757135301e-06,128,0.10360311702301572,4,64,AttentiveFPNode

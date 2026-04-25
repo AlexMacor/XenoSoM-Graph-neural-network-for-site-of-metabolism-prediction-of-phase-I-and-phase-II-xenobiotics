@@ -1,0 +1,2 @@
+lr,weight_decay,hidden_dim,dropout,n_layers,batch_size,activation,model_name
+0.00544239930345177,1.8534626304439207e-06,96,0.15744935261405849,4,64,relu,GNN

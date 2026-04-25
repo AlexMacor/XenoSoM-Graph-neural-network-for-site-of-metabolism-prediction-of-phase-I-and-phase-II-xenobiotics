@@ -1,0 +1,2 @@
+lr,weight_decay,hidden_dim,dropout,n_layers,batch_size,activation,heads,model_name
+0.0006732003749998937,1.6019059566860114e-06,256,0.37900977384061635,4,8,leaky_relu,8,GATv2Model
