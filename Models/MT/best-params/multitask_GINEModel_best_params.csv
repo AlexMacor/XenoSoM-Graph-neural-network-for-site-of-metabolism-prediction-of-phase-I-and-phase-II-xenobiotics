@@ -1,2 +1,0 @@
-lr,weight_decay,hidden_dim,dropout,n_layers,batch_size,activation,model_name
-0.0005189528923430132,7.3786696012913975e-06,256,0.48128158160885204,3,8,relu,GINEModel

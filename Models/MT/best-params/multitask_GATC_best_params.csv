@@ -1,2 +1,0 @@
-lr,weight_decay,hidden_dim,dropout,n_layers,batch_size,activation,heads,model_name
-0.000891307431877392,1.4990637597102739e-06,256,0.25901635157988784,4,16,relu,8,GATC
