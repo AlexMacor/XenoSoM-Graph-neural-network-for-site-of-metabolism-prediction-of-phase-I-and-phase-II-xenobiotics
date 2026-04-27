@@ -48,24 +48,8 @@ python utils_sdf.py --base_path \main_path_to_build_the_dataset\ --sdf_m \path_t
 ```
     
 ## 3 GNNs training 
-To perform the GNN training run the following script:
+To perform the GNN training sinply change the path in the reaction_processing.py file 
 
-```bash
-Run_training.cmd
-```
-which performs GNN training in batch mode for each of the reaction modelled, for example, the following command was used for the glucuronidation reaction: 
-
-```bash
-python Glucuronidation.py --root_path Glucuronidation > log_Glucuronidation_script.txt 2>&1
-```
-
-## 5 Inference 
-To perform inference with the previous trained model run in batch mode the following script:
-
-```bash
-Run_inference_gin_rdkit.cmd
-```
-which performs inference in batch mode for all the reactions using the GIN architecture with the RDKit atomic descriptors. For example, the following command was used for the glucuronidation reaction: 
 
 ```bash
 python Glucuronidation.py --root_path "main folder" --file_sdf_inf_p "sdf folder inference"
